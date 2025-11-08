@@ -88,17 +88,17 @@ Checklist kronologis untuk membangun aplikasi Rutin.in sesuai spesifikasi di `pr
 
 ## Phase 4: Main Components - Part 1 (Layout & Header)
 
-- [ ] **4.1** Create `app/layout.tsx`:
+- [x] **4.1** Create `app/layout.tsx`:
   - Setup root layout dengan Inter font
   - Configure metadata
   - Apply dark theme background
-- [ ] **4.2** Create `components/Header.tsx`:
+- [x] **4.2** Create `components/Header.tsx`:
   - Add logo/title
   - Add download button (icon)
   - Add upload button (icon)
   - Add view toggle component
   - Style dengan glassmorphism effect
-- [ ] **4.3** Create `app/page.tsx`:
+- [x] **4.3** Create `app/page.tsx`:
   - Import Header component
   - Setup main container untuk habit cards
   - Wrap dengan DndContext dari @dnd-kit
