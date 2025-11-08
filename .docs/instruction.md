@@ -31,20 +31,20 @@ Checklist kronologis untuk membangun aplikasi Rutin.in sesuai spesifikasi di `pr
 
 ## Phase 2: Core Data Structures & State Management
 
-- [ ] **2.1** Create `lib/types.ts`:
+- [x] **2.1** Create `lib/types.ts`:
   - Define `Habit` interface
   - Define `AppState` interface
   - Export all types
-- [ ] **2.2** Create `lib/constants.ts`:
+- [x] **2.2** Create `lib/constants.ts`:
   - Define `COLOR_SETS` dengan 10 color themes
   - Export constants
-- [ ] **2.3** Create `lib/utils.ts`:
+- [x] **2.3** Create `lib/utils.ts`:
   - Implement `formatDate()` function
   - Implement `getWeekDays()` function
   - Implement `getOverviewDays()` function
   - Implement `cn()` classnames utility
   - Implement `escapeHTML()` function
-- [ ] **2.4** Create `hooks/useHabits.ts` (Zustand store):
+- [x] **2.4** Create `hooks/useHabits.ts` (Zustand store):
   - Define initial state
   - Implement habit CRUD actions (add, update, delete, reorder)
   - Implement date toggle action
