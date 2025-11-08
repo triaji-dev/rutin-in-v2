@@ -4,8 +4,11 @@ import React, { useRef } from 'react';
 import { Download, Upload } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { ToggleGroup } from '@/components/ui/Toggle';
-import { useViewMode } from '@/hooks/useHabits';
+import { useViewMode, useHabits } from '@/hooks/useHabits';
+import { useDownload } from '@/hooks/useDownload';
+import { useUpload } from '@/hooks/useUpload';
 import { cn } from '@/lib/utils';
+import { ViewMode } from '@/lib/types';
 
 /**
  * Header Component
@@ -28,11 +31,13 @@ import { cn } from '@/lib/utils';
  */
 export const Header: React.FC = () => {
   const viewMode = useViewMode();
+  const setViewMode = useHabits(state => state.setViewMode);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const downloadHabits = useDownload();
+  const uploadHabits = useUpload();
 
   const handleDownload = () => {
-    // TODO: Implement download functionality in Phase 12
-    console.log('Download habits');
+    downloadHabits();
   };
 
   const handleUploadClick = () => {
@@ -42,11 +47,14 @@ export const Header: React.FC = () => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // TODO: Implement upload functionality in Phase 12
-      console.log('Upload file:', file.name);
+      uploadHabits(file);
       // Reset input so same file can be selected again
       event.target.value = '';
     }
+  };
+
+  const handleViewModeChange = (value: string) => {
+    setViewMode(value as ViewMode);
   };
 
   return (
@@ -80,10 +88,7 @@ export const Header: React.FC = () => {
             {/* View Mode Toggle */}
             <ToggleGroup
               value={viewMode}
-              onValueChange={(value) => {
-                // TODO: This will be wired properly in Phase 13
-                console.log('View mode changed:', value);
-              }}
+              onValueChange={handleViewModeChange}
               options={[
                 { value: 'weekly', label: 'Weekly' },
                 { value: 'overview', label: 'Grid' },
@@ -129,10 +134,7 @@ export const Header: React.FC = () => {
         <div className="sm:hidden mt-3">
           <ToggleGroup
             value={viewMode}
-            onValueChange={(value) => {
-              // TODO: This will be wired properly in Phase 13
-              console.log('View mode changed:', value);
-            }}
+            onValueChange={handleViewModeChange}
             options={[
               { value: 'weekly', label: 'Weekly' },
               { value: 'overview', label: 'Grid' },

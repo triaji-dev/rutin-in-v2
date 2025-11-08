@@ -285,24 +285,24 @@ Checklist kronologis untuk membangun aplikasi Rutin.in sesuai spesifikasi di `pr
 
 ## Phase 12: Data Export/Import
 
-- [ ] **12.1** Create `hooks/useDownload.ts`:
+- [x] **12.1** Create `hooks/useDownload.ts`:
   - Implement download functionality
   - Format JSON dengan version dan timestamp
   - Include all habits dengan completedDates dan notes
   - Generate filename: `rutin-in-backup-YYYY-MM-DD.json`
   - Trigger file download
-- [ ] **12.2** Create `hooks/useUpload.ts`:
+- [x] **12.2** Create `hooks/useUpload.ts`:
   - Implement file upload handler
   - Validate JSON structure
   - Check version compatibility
   - Deserialize completedDates Arrays to Sets
   - Replace habits di store
   - Show error alert jika invalid
-- [ ] **12.3** Integrate dengan Header:
+- [x] **12.3** Integrate dengan Header:
   - Wire download button to useDownload hook
   - Wire upload button to useUpload hook
   - Show feedback on success/error
-- [ ] **12.4** Test export/import:
+- [x] **12.4** Test export/import:
   - Download habits
   - Clear localStorage
   - Upload file
@@ -312,21 +312,21 @@ Checklist kronologis untuk membangun aplikasi Rutin.in sesuai spesifikasi di `pr
 
 ## Phase 13: View Mode Toggle
 
-- [ ] **13.1** Implement toggle component di Header:
+- [x] **13.1** Implement toggle component di Header:
   - Use Toggle UI component
   - Show "Weekly" dan "Grid/Overview" labels
   - Highlight active view (white text)
   - Gray out inactive view
   - Smooth transition animations
-- [ ] **13.2** Update HabitCard rendering:
+- [x] **13.2** Update HabitCard rendering:
   - Conditional render: DateCircle vs DateGrid
   - Pass correct days array to components
   - Handle view mode dari Zustand state
-- [ ] **13.3** Implement view mode persistence:
+- [x] **13.3** Implement view mode persistence:
   - Save view preference to Zustand
   - Optionally save to localStorage
   - Restore on page reload
-- [ ] **13.4** Test view switching:
+- [x] **13.4** Test view switching:
   - Toggle between weekly and grid
   - Verify correct days displayed
   - Check animations smooth
@@ -335,23 +335,23 @@ Checklist kronologis untuk membangun aplikasi Rutin.in sesuai spesifikasi di `pr
 
 ## Phase 14: Add Activity Button
 
-- [ ] **14.1** Create `components/AddActivityButton.tsx`:
+- [x] **14.1** Create `components/AddActivityButton.tsx`:
   - Display floating button or fixed button
   - Use "+" icon dari lucide-react
   - Style: primary button style
   - Position: bottom atau dalam list
-- [ ] **14.2** Implement add habit logic:
+- [x] **14.2** Implement add habit logic:
   - Generate ID: `habit-${timestamp}`
   - Default name: "New Habit"
   - Default color: "green"
   - Empty completedDates Set
   - Add createdAt timestamp
-- [ ] **14.3** Wire button to Zustand action:
+- [x] **14.3** Wire button to Zustand action:
   - Call `addHabit()` on click
   - Add new habit to list
   - Save to localStorage
   - Auto-focus pada new habit name untuk edit
-- [ ] **14.4** Test habit creation:
+- [x] **14.4** Test habit creation:
   - Click add button multiple times
   - Verify unique IDs generated
   - Verify habits appear dalam list

@@ -191,6 +191,7 @@ export const HabitCard: React.FC<HabitCardProps> = ({
         ref={setNodeRef}
         style={style}
         onContextMenu={handleRightClick}
+        data-habit-id={habit.id}
         className={cn(
         'group relative',
         'p-4 sm:p-5',

@@ -1,8 +1,9 @@
-import { Habit, HabitJSON } from '@/lib/types';
+import { Habit, HabitJSON, ViewMode } from '@/lib/types';
 import { formatDate, generateHabitId } from '@/lib/utils';
 import { useHabits } from './useHabits';
 
 const STORAGE_KEY = 'rutin-in-habits-v1';
+const VIEW_MODE_KEY = 'rutin-in-viewmode';
 
 type StoredPayload = {
   version: number;
@@ -58,6 +59,35 @@ export function loadHabitsFromStorage(): Habit[] | null {
 }
 
 /**
+ * Save view mode preference to localStorage
+ */
+export function saveViewModeToStorage(viewMode: ViewMode) {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(VIEW_MODE_KEY, viewMode);
+  } catch (e) {
+    console.error('Failed to save view mode to localStorage', e);
+  }
+}
+
+/**
+ * Load view mode preference from localStorage
+ */
+export function loadViewModeFromStorage(): ViewMode | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const stored = localStorage.getItem(VIEW_MODE_KEY);
+    if (stored === 'weekly' || stored === 'overview') {
+      return stored;
+    }
+    return null;
+  } catch (e) {
+    console.error('Failed to load view mode from localStorage', e);
+    return null;
+  }
+}
+
+/**
  * Initialize localStorage sync.
  * - Loads existing habits if available
  * - If none found, creates a sensible default habit
@@ -65,6 +95,12 @@ export function loadHabitsFromStorage(): Habit[] | null {
  */
 export function initLocalStorageSync() {
   if (typeof window === 'undefined') return;
+
+  // Load and restore viewMode
+  const storedViewMode = loadViewModeFromStorage();
+  if (storedViewMode) {
+    useHabits.setState({ viewMode: storedViewMode });
+  }
 
   const stored = loadHabitsFromStorage();
   if (stored && stored.length > 0) {
@@ -92,5 +128,10 @@ export function initLocalStorageSync() {
   // Subscribe to habit changes and persist (listen to full state and persist habits)
   useHabits.subscribe(state => {
     saveHabitsToStorage(state.habits);
+  });
+
+  // Subscribe to viewMode changes and persist
+  useHabits.subscribe(state => {
+    saveViewModeToStorage(state.viewMode);
   });
 }

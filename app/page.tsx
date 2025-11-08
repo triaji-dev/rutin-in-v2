@@ -6,11 +6,14 @@ import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-ki
 import { Header } from '@/components/Header';
 import { HabitCard } from '@/components/HabitCard';
 import { BulkActionsBar } from '@/components/BulkActionsBar';
+import { AddActivityButton } from '@/components/AddActivityButton';
 import { ConfirmModal } from '@/components/ConfirmModal';
 import { ColorPickerModal } from '@/components/ColorPickerModal';
 import { NoteModal } from '@/components/NoteModal';
 import { initLocalStorageSync } from '@/hooks/useLocalStorage';
 import { useHabitsArray, useHabits, useSelectMode } from '@/hooks/useHabits';
+import { generateHabitId } from '@/lib/utils';
+import { Habit } from '@/lib/types';
 
 /**
  * Home Page Component
@@ -38,6 +41,7 @@ export default function Home() {
   const reorderHabits = useHabits((state) => state.reorderHabits);
   const updateHabit = useHabits((state) => state.updateHabit);
   const toggleDate = useHabits((state) => state.toggleDate);
+  const addHabit = useHabits((state) => state.addHabit);
   const addSelectedHabit = useHabits((state) => state.addSelectedHabit);
   const removeSelectedHabit = useHabits((state) => state.removeSelectedHabit);
   const selectedHabitsSet = useHabits((state) => state.selectedHabits);
@@ -51,6 +55,31 @@ export default function Home() {
   React.useEffect(() => {
     initLocalStorageSync();
   }, []);
+
+  // Handle adding a new habit
+  const handleAddHabit = () => {
+    const newHabit: Habit = {
+      id: generateHabitId(),
+      name: 'New Habit',
+      color: 'green',
+      completedDates: new Set(),
+      createdAt: Date.now(),
+      notes: '',
+    };
+    
+    addHabit(newHabit);
+    
+    // Auto-focus on the new habit name for editing
+    // Wait for next tick to ensure DOM is updated
+    setTimeout(() => {
+      const newHabitCard = document.querySelector(`[data-habit-id="${newHabit.id}"]`);
+      const nameInput = newHabitCard?.querySelector('input[type="text"]') as HTMLInputElement;
+      if (nameInput) {
+        nameInput.focus();
+        nameInput.select();
+      }
+    }, 100);
+  };
 
   // Toggle habit selection
   const toggleHabitSelection = (habitId: string) => {
@@ -204,6 +233,9 @@ export default function Home() {
             ) : null}
           </DragOverlay>
         </DndContext>
+
+        {/* Add Activity Button */}
+        <AddActivityButton onClick={handleAddHabit} />
       </main>
 
       {/* Modals */}
