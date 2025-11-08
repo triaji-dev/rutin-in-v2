@@ -11,7 +11,7 @@ import { DateCircle } from '@/components/DateCircle';
 import { DateGrid } from '@/components/DateGrid';
 import { NoteDisplay } from '@/components/NoteDisplay';
 import { ContextMenu, ContextMenuItem } from '@/components/ui/ContextMenu';
-import { getWeekDays, getOverviewDays, formatDate } from '@/lib/utils';
+import { getWeekDays, getOverviewDays, formatDate, getDayName } from '@/lib/utils';
 import { useViewMode, useIsHabitSelected } from '@/hooks/useHabits';
 import { Pencil, Palette, FileText, CheckSquare, Trash2 } from 'lucide-react';
 
@@ -194,17 +194,17 @@ export const HabitCard: React.FC<HabitCardProps> = ({
         data-habit-id={habit.id}
         className={cn(
         'group relative',
-        'p-4 sm:p-5',
-        'rounded-xl',
+        'p-3 sm:p-4',
+        'rounded-lg',
         // Glassmorphism effect
-        'bg-zinc-800/70 backdrop-blur-[15px]',
+        'bg-zinc-800/90 backdrop-blur-[15px]',
         'border',
         // Border colors
         isSelected
           ? 'border-blue-500/70'
-          : 'border-white/10',
+          : 'border-white/5',
         // Shadow
-        'shadow-lg shadow-black/10',
+        'shadow-md shadow-black/20',
         // Transitions
         'transition-all duration-200 ease-in-out',
         // Dragging state
@@ -247,30 +247,50 @@ export const HabitCard: React.FC<HabitCardProps> = ({
         {/* Header */}
         <HabitCardHeader
           habitName={habit.name}
+          habitColor={habit.color}
           onNameChange={onNameChange}
           onOptionsClick={handleOptionsClick}
           editTrigger={editNameTrigger}
         />
 
         {/* Dates Section */}
-        <div className="mt-4">
+        <div className="mt-3">
           {viewMode === 'weekly' ? (
-            // Weekly View: DateCircles
-            <div className="flex items-center gap-2 flex-wrap">
-              {weekDays.map((date) => {
-                const dateString = formatDate(date);
-                const isCompleted = habit.completedDates.has(dateString);
+            // Weekly View: DateCircles with day labels on top
+            <div className="flex flex-col">
+              {/* Day Labels Row */}
+              <div className="flex items-center gap-1.5 mb-1.5">
+                {weekDays.map((date) => {
+                  const dayName = getDayName(date);
+                  return (
+                    <div
+                      key={`label-${formatDate(date)}`}
+                      className="w-9 text-center"
+                    >
+                      <span className="text-[11px] font-medium text-zinc-500">
+                        {dayName}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+              {/* Date Circles Row */}
+              <div className="flex items-center gap-1.5">
+                {weekDays.map((date) => {
+                  const dateString = formatDate(date);
+                  const isCompleted = habit.completedDates.has(dateString);
 
-                return (
-                  <DateCircle
-                    key={dateString}
-                    date={date}
-                    isCompleted={isCompleted}
-                    color={habit.color}
-                    onToggle={() => onDateToggle(dateString)}
-                  />
-                );
-              })}
+                  return (
+                    <DateCircle
+                      key={dateString}
+                      date={date}
+                      isCompleted={isCompleted}
+                      color={habit.color}
+                      onToggle={() => onDateToggle(dateString)}
+                    />
+                  );
+                })}
+              </div>
             </div>
           ) : (
             // Overview: DateGrid

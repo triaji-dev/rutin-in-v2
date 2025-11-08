@@ -161,7 +161,7 @@ export default function Home() {
       <Header />
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <main className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
         {/* Drag and Drop Context - disabled in select mode */}
         <DndContext
           collisionDetection={closestCenter}
@@ -174,7 +174,7 @@ export default function Home() {
             strategy={verticalListSortingStrategy}
           >
             {/* Habit Cards Container */}
-            <div className="space-y-4">
+            <div className="space-y-3">
               {habits.length === 0 ? (
                 // Empty State
                 <div className="flex flex-col items-center justify-center py-16 text-center">

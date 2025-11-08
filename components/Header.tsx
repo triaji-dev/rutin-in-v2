@@ -63,23 +63,23 @@ export const Header: React.FC = () => {
         'sticky top-0 z-30',
         'w-full',
         'px-4 sm:px-6 lg:px-8',
-        'py-4',
+        'py-3',
         // Glassmorphism effect
-        'bg-zinc-800/70 backdrop-blur-[15px]',
-        'border-b border-white/10',
+        'bg-zinc-900/95 backdrop-blur-[15px]',
+        'border-b border-white/5',
         // Shadow
-        'shadow-lg shadow-black/10'
+        'shadow-md shadow-black/20'
       )}
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between gap-4">
           {/* Logo/Title */}
           <div className="flex items-center gap-2">
-            <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-              Rutin.in
+            <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+              rutin.in
             </h1>
-            <span className="hidden sm:inline text-sm text-zinc-400 font-normal">
-              — Build better habits
+            <span className="hidden sm:inline text-xs text-zinc-500 font-normal">
+              v1.1
             </span>
           </div>
 
@@ -99,23 +99,23 @@ export const Header: React.FC = () => {
             {/* Download Button */}
             <Button
               variant="icon"
-              size="md"
+              size="sm"
               onClick={handleDownload}
               aria-label="Download habits"
               title="Download habits as JSON"
             >
-              <Download className="w-5 h-5" />
+              <Download className="w-4 h-4" />
             </Button>
 
             {/* Upload Button */}
             <Button
               variant="icon"
-              size="md"
+              size="sm"
               onClick={handleUploadClick}
               aria-label="Upload habits"
               title="Upload habits from JSON"
             >
-              <Upload className="w-5 h-5" />
+              <Upload className="w-4 h-4" />
             </Button>
 
             {/* Hidden file input for upload */}

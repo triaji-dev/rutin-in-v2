@@ -54,8 +54,8 @@ export const DateCircle: React.FC<DateCircleProps> = ({
       type="button"
       onClick={onToggle}
       className={cn(
-        'flex flex-col items-center justify-center',
-        'w-8 h-8',
+        'flex items-center justify-center',
+        'w-9 h-9',
         'rounded-full',
         'border-2',
         'transition-all duration-200 ease-in-out',
@@ -65,7 +65,7 @@ export const DateCircle: React.FC<DateCircleProps> = ({
         // Completed state
         isCompleted
           ? 'border-transparent shadow-sm'
-          : 'border-zinc-600 hover:border-zinc-500',
+          : 'border-zinc-700 hover:border-zinc-600',
         // Hover effects
         !isCompleted && 'hover:bg-zinc-700/30',
         isCompleted && 'hover:opacity-90',
@@ -84,15 +84,7 @@ export const DateCircle: React.FC<DateCircleProps> = ({
     >
       <span
         className={cn(
-          'text-[10px] font-medium leading-none',
-          isCompleted ? 'text-white' : 'text-zinc-500'
-        )}
-      >
-        {dayName}
-      </span>
-      <span
-        className={cn(
-          'text-xs font-bold leading-none mt-0.5',
+          'text-sm font-bold leading-none',
           isCompleted ? 'text-white' : 'text-zinc-300'
         )}
       >
