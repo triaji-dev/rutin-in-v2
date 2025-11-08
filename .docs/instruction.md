@@ -189,7 +189,7 @@ Checklist kronologis untuk membangun aplikasi Rutin.in sesuai spesifikasi di `pr
 
 ## Phase 8: Select Mode & Bulk Operations
 
-- [ ] **8.1** Create `components/BulkActionsBar.tsx`:
+- [x] **8.1** Create `components/BulkActionsBar.tsx`:
   - Display 5 action buttons:
     1. Change Color (blue icon)
     2. Delete (red icon)
@@ -198,17 +198,17 @@ Checklist kronologis untuk membangun aplikasi Rutin.in sesuai spesifikasi di `pr
     5. Exit Select Mode (gray icon)
   - Position at top of screen
   - Style: zinc-800 background, rounded
-- [ ] **8.2** Implement select mode toggle:
+- [x] **8.2** Implement select mode toggle:
   - Update Zustand store actions
   - Disable drag-drop saat select mode active
   - Change cursor to pointer on cards
   - Show bulk actions bar
-- [ ] **8.3** Implement selection logic:
+- [x] **8.3** Implement selection logic:
   - Click card to toggle selection
   - Add blue border untuk selected cards
   - Reduce opacity (0.4) untuk card content
   - Track selected IDs dalam Set
-- [ ] **8.4** Implement bulk actions:
+- [x] **8.4** Implement bulk actions:
   - Select All: add semua habit IDs
   - Unselect All: clear selection Set
   - Bulk Change Color: apply ke semua selected
@@ -219,17 +219,17 @@ Checklist kronologis untuk membangun aplikasi Rutin.in sesuai spesifikasi di `pr
 
 ## Phase 9: Context Menu Integration
 
-- [ ] **9.1** Add context menu trigger ke HabitCard:
+- [x] **9.1** Add context menu trigger ke HabitCard:
   - Right-click event handler
   - Three-dot button click handler
   - Position menu near cursor/button
-- [ ] **9.2** Implement context menu options:
+- [x] **9.2** Implement context menu options:
   - Edit: focus pada habit name input
   - Change Color: open color picker modal
   - Add/Edit Note: open note modal
   - Select Mode: enter select mode dengan card selected
   - Delete: show confirmation modal
-- [ ] **9.3** Style context menu items:
+- [x] **9.3** Style context menu items:
   - Hover background zinc-700
   - Delete item: red text
   - Proper spacing dan padding
@@ -239,19 +239,19 @@ Checklist kronologis untuk membangun aplikasi Rutin.in sesuai spesifikasi di `pr
 
 ## Phase 10: Notes System
 
-- [ ] **10.1** Implement note actions di Zustand:
+- [x] **10.1** Implement note actions di Zustand:
   - `addNote(habitId, note)`: save note to habit
   - `getNote(habitId)`: retrieve note
   - `hasNote(habitId)`: check if note exists
-- [ ] **10.2** Add note button/indicator ke HabitCard:
+- [x] **10.2** Add note button/indicator ke HabitCard:
   - Change color/style when note exists
   - Click to open note modal
-- [ ] **10.3** Integrate NoteModal:
+- [x] **10.3** Integrate NoteModal:
   - Open saat add/edit note action
   - Load existing note jika ada
   - Save note on submit
   - Update note display after save
-- [ ] **10.4** Add note to export/import:
+- [x] **10.4** Add note to export/import:
   - Include notes dalam JSON export
   - Restore notes saat import
   - Handle notes dalam localStorage

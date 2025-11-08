@@ -9,6 +9,7 @@ interface HabitCardHeaderProps {
   habitName: string;
   onNameChange: (name: string) => void;
   onOptionsClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  editTrigger?: number;
   className?: string;
 }
 
@@ -41,6 +42,7 @@ export const HabitCardHeader: React.FC<HabitCardHeaderProps> = ({
   habitName,
   onNameChange,
   onOptionsClick,
+  editTrigger = 0,
   className,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -51,6 +53,13 @@ export const HabitCardHeader: React.FC<HabitCardHeaderProps> = ({
   useEffect(() => {
     setEditValue(habitName);
   }, [habitName]);
+
+  // Trigger edit mode when editTrigger changes
+  useEffect(() => {
+    if (editTrigger > 0) {
+      setIsEditing(true);
+    }
+  }, [editTrigger]);
 
   // Auto-focus and select text when entering edit mode
   useEffect(() => {

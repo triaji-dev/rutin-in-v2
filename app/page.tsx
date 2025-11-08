@@ -5,6 +5,10 @@ import { DndContext, closestCenter, DragEndEvent, DragStartEvent, DragOverlay } 
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
 import { Header } from '@/components/Header';
 import { HabitCard } from '@/components/HabitCard';
+import { BulkActionsBar } from '@/components/BulkActionsBar';
+import { ConfirmModal } from '@/components/ConfirmModal';
+import { ColorPickerModal } from '@/components/ColorPickerModal';
+import { NoteModal } from '@/components/NoteModal';
 import { useHabitsArray, useHabits, useSelectMode } from '@/hooks/useHabits';
 
 /**
@@ -16,16 +20,19 @@ import { useHabitsArray, useHabits, useSelectMode } from '@/hooks/useHabits';
  * - Header with logo, download/upload, and view toggle
  * - Main container for habit cards
  * - DndContext for drag and drop functionality
+ * - Select mode with BulkActionsBar
  * - Dark theme styling
  * - Responsive layout
  * 
  * Phase 4: Basic layout and structure
  * Phase 6: Full drag & drop implementation
+ * Phase 8: Select mode & bulk operations
  */
 export default function Home() {
   const habits = useHabitsArray();
   const selectMode = useSelectMode();
   const [activeId, setActiveId] = React.useState<string | null>(null);
+  const [habitToNote, setHabitToNote] = React.useState<string | null>(null);
   
   const reorderHabits = useHabits((state) => state.reorderHabits);
   const updateHabit = useHabits((state) => state.updateHabit);
@@ -33,6 +40,11 @@ export default function Home() {
   const addSelectedHabit = useHabits((state) => state.addSelectedHabit);
   const removeSelectedHabit = useHabits((state) => state.removeSelectedHabit);
   const selectedHabitsSet = useHabits((state) => state.selectedHabits);
+  const deleteHabit = useHabits((state) => state.deleteHabit);
+  const setHabitToDelete = useHabits((state) => state.setHabitToDelete);
+  const setHabitToColor = useHabits((state) => state.setHabitToColor);
+  const habitToDelete = useHabits((state) => state.habitToDelete);
+  const habitToColor = useHabits((state) => state.habitToColor);
 
   // Toggle habit selection
   const toggleHabitSelection = (habitId: string) => {
@@ -43,9 +55,11 @@ export default function Home() {
     }
   };
 
-  // Drag start handler
+  // Drag start handler - disabled in select mode
   const handleDragStart = (event: DragStartEvent) => {
-    setActiveId(event.active.id as string);
+    if (!selectMode) {
+      setActiveId(event.active.id as string);
+    }
   };
 
   // Drag end handler - reorder habits
@@ -54,7 +68,7 @@ export default function Home() {
 
     setActiveId(null);
 
-    if (!over || active.id === over.id) {
+    if (selectMode || !over || active.id === over.id) {
       return;
     }
 
@@ -72,17 +86,48 @@ export default function Home() {
     setActiveId(null);
   };
 
+  // Bulk action handlers
+  const handleBulkChangeColor = () => {
+    setHabitToColor('bulk');
+  };
+
+  const handleBulkDelete = () => {
+    setHabitToDelete('bulk');
+  };
+
+  // Confirm delete handler
+  const handleConfirmDelete = () => {
+    if (habitToDelete === 'bulk') {
+      // Delete all selected habits
+      selectedHabitsSet.forEach(habitId => {
+        deleteHabit(habitId);
+      });
+    } else if (habitToDelete) {
+      // Delete single habit
+      deleteHabit(habitToDelete);
+    }
+    setHabitToDelete(null);
+  };
+
   // Find the active habit for drag overlay
   const activeHabit = activeId ? habits.find((h) => h.id === activeId) : null;
 
   return (
     <div className="min-h-screen bg-dark">
+      {/* Bulk Actions Bar - shown when select mode is active */}
+      {selectMode && (
+        <BulkActionsBar
+          onChangeColor={handleBulkChangeColor}
+          onDelete={handleBulkDelete}
+        />
+      )}
+
       {/* Header */}
       <Header />
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Drag and Drop Context */}
+        {/* Drag and Drop Context - disabled in select mode */}
         <DndContext
           collisionDetection={closestCenter}
           onDragStart={handleDragStart}
@@ -113,17 +158,19 @@ export default function Home() {
                     habit={habit}
                     onNameChange={(name) => updateHabit(habit.id, { name })}
                     onDateToggle={(dateString) => toggleDate(habit.id, dateString)}
-                    onOptionsClick={() => {
-                      // TODO: Phase 9 - Open context menu
-                      console.log('Options clicked for habit:', habit.id);
-                    }}
-                    onNoteClick={() => {
-                      // TODO: Phase 10 - Open note modal
-                      console.log('Note clicked for habit:', habit.id);
-                    }}
+                    onNoteClick={() => setHabitToNote(habit.id)}
                     onCardClick={() => {
                       if (selectMode) {
                         toggleHabitSelection(habit.id);
+                      }
+                    }}
+                    onChangeColor={() => setHabitToColor(habit.id)}
+                    onDelete={() => setHabitToDelete(habit.id)}
+                    onEnterSelectMode={() => {
+                      if (!selectMode) {
+                        const toggleSelectMode = useHabits.getState().toggleSelectMode;
+                        toggleSelectMode();
+                        addSelectedHabit(habit.id);
                       }
                     }}
                     isSelectMode={selectMode}
@@ -141,8 +188,10 @@ export default function Home() {
                   habit={activeHabit}
                   onNameChange={() => {}}
                   onDateToggle={() => {}}
-                  onOptionsClick={() => {}}
                   onNoteClick={() => {}}
+                  onChangeColor={() => {}}
+                  onDelete={() => {}}
+                  onEnterSelectMode={() => {}}
                   isSelectMode={false}
                 />
               </div>
@@ -150,6 +199,31 @@ export default function Home() {
           </DragOverlay>
         </DndContext>
       </main>
+
+      {/* Modals */}
+      {/* Confirm Delete Modal */}
+      <ConfirmModal
+        isOpen={habitToDelete !== null}
+        onClose={() => setHabitToDelete(null)}
+        onConfirm={handleConfirmDelete}
+        deleteType={habitToDelete}
+        selectedCount={selectedHabitsSet.size}
+      />
+
+      {/* Color Picker Modal */}
+      <ColorPickerModal
+        isOpen={habitToColor !== null}
+        onClose={() => setHabitToColor(null)}
+        colorChangeType={habitToColor}
+        selectedCount={selectedHabitsSet.size}
+      />
+
+      {/* Note Modal */}
+      <NoteModal
+        isOpen={habitToNote !== null}
+        onClose={() => setHabitToNote(null)}
+        habitId={habitToNote}
+      />
     </div>
   );
 }

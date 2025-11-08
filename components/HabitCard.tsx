@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { GripVertical } from 'lucide-react';
@@ -10,16 +10,20 @@ import { HabitCardHeader } from '@/components/HabitCardHeader';
 import { DateCircle } from '@/components/DateCircle';
 import { DateGrid } from '@/components/DateGrid';
 import { NoteDisplay } from '@/components/NoteDisplay';
+import { ContextMenu, ContextMenuItem } from '@/components/ui/ContextMenu';
 import { getWeekDays, getOverviewDays, formatDate } from '@/lib/utils';
 import { useViewMode, useIsHabitSelected } from '@/hooks/useHabits';
+import { Pencil, Palette, FileText, CheckSquare, Trash2 } from 'lucide-react';
 
 interface HabitCardProps {
   habit: Habit;
   onNameChange: (name: string) => void;
   onDateToggle: (dateString: string) => void;
-  onOptionsClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   onNoteClick: () => void;
   onCardClick?: () => void;
+  onChangeColor: () => void;
+  onDelete: () => void;
+  onEnterSelectMode: () => void;
   isSelectMode: boolean;
   className?: string;
 }
@@ -35,6 +39,7 @@ interface HabitCardProps {
  * - Integrate DateGrid for overview
  * - Drag handle for reordering
  * - Integrate NoteDisplay
+ * - Context menu (right-click and three-dot button)
  * - useSortable hook from @dnd-kit
  * - Select mode (blue border, reduced opacity)
  * - Glassmorphism styling
@@ -45,8 +50,10 @@ interface HabitCardProps {
  *   habit={habit}
  *   onNameChange={(name) => updateHabit(habit.id, { name })}
  *   onDateToggle={(date) => toggleDate(habit.id, date)}
- *   onOptionsClick={(e) => openContextMenu(e, habit.id)}
  *   onNoteClick={() => openNoteModal(habit.id)}
+ *   onChangeColor={() => openColorModal(habit.id)}
+ *   onDelete={() => openDeleteModal(habit.id)}
+ *   onEnterSelectMode={() => enterSelectMode(habit.id)}
  *   isSelectMode={selectMode}
  * />
  * ```
@@ -55,14 +62,22 @@ export const HabitCard: React.FC<HabitCardProps> = ({
   habit,
   onNameChange,
   onDateToggle,
-  onOptionsClick,
   onNoteClick,
   onCardClick,
+  onChangeColor,
+  onDelete,
+  onEnterSelectMode,
   isSelectMode,
   className,
 }) => {
   const viewMode = useViewMode();
   const isSelected = useIsHabitSelected(habit.id);
+  const [contextMenu, setContextMenu] = useState<{ isOpen: boolean; x: number; y: number }>({
+    isOpen: false,
+    x: 0,
+    y: 0,
+  });
+  const [editNameTrigger, setEditNameTrigger] = useState(0);
 
   const {
     attributes,
@@ -91,11 +106,92 @@ export const HabitCard: React.FC<HabitCardProps> = ({
     }
   };
 
+  // Context menu handlers
+  const handleRightClick = (event: React.MouseEvent) => {
+    if (isSelectMode) return; // Disable context menu in select mode
+    
+    event.preventDefault();
+    setContextMenu({
+      isOpen: true,
+      x: event.clientX,
+      y: event.clientY,
+    });
+  };
+
+  const handleOptionsClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (isSelectMode) return; // Disable context menu in select mode
+    
+    event.stopPropagation();
+    const rect = event.currentTarget.getBoundingClientRect();
+    setContextMenu({
+      isOpen: true,
+      x: rect.right,
+      y: rect.bottom,
+    });
+  };
+
+  const handleCloseContextMenu = () => {
+    setContextMenu({ ...contextMenu, isOpen: false });
+  };
+
+  // Context menu items
+  const contextMenuItems: ContextMenuItem[] = [
+    {
+      id: 'edit',
+      label: 'Edit Name',
+      icon: <Pencil className="w-4 h-4" />,
+      onClick: () => {
+        handleCloseContextMenu();
+        // Trigger edit mode by incrementing counter
+        setEditNameTrigger(prev => prev + 1);
+      },
+    },
+    {
+      id: 'color',
+      label: 'Change Color',
+      icon: <Palette className="w-4 h-4" />,
+      onClick: () => {
+        handleCloseContextMenu();
+        onChangeColor();
+      },
+    },
+    {
+      id: 'note',
+      label: habit.notes ? 'Edit Note' : 'Add Note',
+      icon: <FileText className="w-4 h-4" />,
+      onClick: () => {
+        handleCloseContextMenu();
+        onNoteClick();
+      },
+    },
+    {
+      id: 'select',
+      label: 'Select Mode',
+      icon: <CheckSquare className="w-4 h-4" />,
+      onClick: () => {
+        handleCloseContextMenu();
+        onEnterSelectMode();
+      },
+    },
+    {
+      id: 'delete',
+      label: 'Delete',
+      icon: <Trash2 className="w-4 h-4" />,
+      variant: 'danger' as const,
+      onClick: () => {
+        handleCloseContextMenu();
+        onDelete();
+      },
+    },
+  ];
+
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className={cn(
+    <>
+      <div
+        ref={setNodeRef}
+        style={style}
+        onContextMenu={handleRightClick}
+        className={cn(
         'group relative',
         'p-4 sm:p-5',
         'rounded-xl',
@@ -151,7 +247,8 @@ export const HabitCard: React.FC<HabitCardProps> = ({
         <HabitCardHeader
           habitName={habit.name}
           onNameChange={onNameChange}
-          onOptionsClick={onOptionsClick}
+          onOptionsClick={handleOptionsClick}
+          editTrigger={editNameTrigger}
         />
 
         {/* Dates Section */}
@@ -215,5 +312,14 @@ export const HabitCard: React.FC<HabitCardProps> = ({
         </div>
       )}
     </div>
+
+      {/* Context Menu */}
+      <ContextMenu
+        items={contextMenuItems}
+        isOpen={contextMenu.isOpen}
+        onClose={handleCloseContextMenu}
+        position={{ x: contextMenu.x, y: contextMenu.y }}
+      />
+    </>
   );
 };
