@@ -108,30 +108,30 @@ Checklist kronologis untuk membangun aplikasi Rutin.in sesuai spesifikasi di `pr
 
 ## Phase 5: Main Components - Part 2 (Habit Cards)
 
-- [ ] **5.1** Create `components/HabitCardHeader.tsx`:
+- [x] **5.1** Create `components/HabitCardHeader.tsx`:
   - Display habit name dengan inline editing
   - Add three-dot options button
   - Handle click to edit
   - Handle Enter/blur to save
   - Default to "Untitled" jika kosong
-- [ ] **5.2** Create `components/DateCircle.tsx`:
+- [x] **5.2** Create `components/DateCircle.tsx`:
   - Display circular date element
   - Show day name dan date number
   - Handle click to toggle completion
   - Apply theme color saat completed
   - Style: w-8 h-8, border zinc-600
-- [ ] **5.3** Create `components/DateGrid.tsx`:
+- [x] **5.3** Create `components/DateGrid.tsx`:
   - Display grid of 126 squares (18 weeks x 7 days)
   - Apply theme color untuk completed dates
   - No interaction (display only)
   - Style: w-3.5 h-3.5, gap-1
-- [ ] **5.4** Create `components/NoteDisplay.tsx`:
+- [x] **5.4** Create `components/NoteDisplay.tsx`:
   - Display note preview below habit card
   - Truncate long text
   - Add "Read more" link
   - Click to open note modal
   - Only show when note exists
-- [ ] **5.5** Create `components/HabitCard.tsx`:
+- [x] **5.5** Create `components/HabitCard.tsx`:
   - Integrate HabitCardHeader
   - Integrate DateCircle untuk weekly view
   - Integrate DateGrid untuk grid view
