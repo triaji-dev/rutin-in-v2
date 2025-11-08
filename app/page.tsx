@@ -9,6 +9,7 @@ import { BulkActionsBar } from '@/components/BulkActionsBar';
 import { ConfirmModal } from '@/components/ConfirmModal';
 import { ColorPickerModal } from '@/components/ColorPickerModal';
 import { NoteModal } from '@/components/NoteModal';
+import { initLocalStorageSync } from '@/hooks/useLocalStorage';
 import { useHabitsArray, useHabits, useSelectMode } from '@/hooks/useHabits';
 
 /**
@@ -45,6 +46,11 @@ export default function Home() {
   const setHabitToColor = useHabits((state) => state.setHabitToColor);
   const habitToDelete = useHabits((state) => state.habitToDelete);
   const habitToColor = useHabits((state) => state.habitToColor);
+
+  // Initialize localStorage sync on client mount
+  React.useEffect(() => {
+    initLocalStorageSync();
+  }, []);
 
   // Toggle habit selection
   const toggleHabitSelection = (habitId: string) => {

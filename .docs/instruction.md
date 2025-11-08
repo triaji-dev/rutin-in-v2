@@ -260,23 +260,23 @@ Checklist kronologis untuk membangun aplikasi Rutin.in sesuai spesifikasi di `pr
 
 ## Phase 11: LocalStorage Persistence
 
-- [ ] **11.1** Create `hooks/useLocalStorage.ts`:
+- [x] **11.1** Create `hooks/useLocalStorage.ts`:
   - Implement localStorage sync hook
   - Handle Set serialization (Set → Array)
   - Handle Set deserialization (Array → Set)
   - Save after every state change
   - Load on mount
-- [ ] **11.2** Integrate dengan Zustand store:
+- [x] **11.2** Integrate dengan Zustand store:
   - Add useEffect untuk sync
   - Save habits setelah setiap action
   - Handle errors gracefully
   - Use key: `'habits'`
-- [ ] **11.3** Implement default habit creation:
+- [x] **11.3** Implement default habit creation:
   - Check if localStorage kosong
   - Create "Membaca Buku" habit (green)
   - Add 2 completed dates
   - Save to localStorage
-- [ ] **11.4** Test persistence:
+- [x] **11.4** Test persistence:
   - Create/edit/delete habits
   - Reload page
   - Verify data persists
