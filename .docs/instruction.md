@@ -145,18 +145,18 @@ Checklist kronologis untuk membangun aplikasi Rutin.in sesuai spesifikasi di `pr
 
 ## Phase 6: Drag & Drop Functionality
 
-- [ ] **6.1** Setup DndContext di `app/page.tsx`:
+- [x] **6.1** Setup DndContext di `app/page.tsx`:
   - Wrap habit list dengan DndContext
   - Add SortableContext dengan habit IDs
   - Handle onDragEnd event
-- [ ] **6.2** Implement drag visual feedback:
+- [x] **6.2** Implement drag visual feedback:
   - Opacity 0.5 saat dragging
   - Scale 1.02 transform
   - Cursor grab/grabbing
-- [ ] **6.3** Update Zustand store:
+- [x] **6.3** Update Zustand store:
   - Implement `reorderHabits()` action
   - Save new order ke localStorage
-- [ ] **6.4** Test drag & drop:
+- [x] **6.4** Test drag & drop:
   - Reorder multiple habits
   - Verify persistence setelah reload
 

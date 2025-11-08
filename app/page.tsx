@@ -1,10 +1,11 @@
 'use client';
 
 import React from 'react';
-import { DndContext, closestCenter, DragEndEvent } from '@dnd-kit/core';
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { DndContext, closestCenter, DragEndEvent, DragStartEvent, DragOverlay } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
 import { Header } from '@/components/Header';
-import { useHabitsArray } from '@/hooks/useHabits';
+import { HabitCard } from '@/components/HabitCard';
+import { useHabitsArray, useHabits, useSelectMode } from '@/hooks/useHabits';
 
 /**
  * Home Page Component
@@ -23,18 +24,56 @@ import { useHabitsArray } from '@/hooks/useHabits';
  */
 export default function Home() {
   const habits = useHabitsArray();
+  const selectMode = useSelectMode();
+  const [activeId, setActiveId] = React.useState<string | null>(null);
+  
+  const reorderHabits = useHabits((state) => state.reorderHabits);
+  const updateHabit = useHabits((state) => state.updateHabit);
+  const toggleDate = useHabits((state) => state.toggleDate);
+  const addSelectedHabit = useHabits((state) => state.addSelectedHabit);
+  const removeSelectedHabit = useHabits((state) => state.removeSelectedHabit);
+  const selectedHabitsSet = useHabits((state) => state.selectedHabits);
 
-  // TODO: Phase 6 - Implement drag and drop handler
+  // Toggle habit selection
+  const toggleHabitSelection = (habitId: string) => {
+    if (selectedHabitsSet.has(habitId)) {
+      removeSelectedHabit(habitId);
+    } else {
+      addSelectedHabit(habitId);
+    }
+  };
+
+  // Drag start handler
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveId(event.active.id as string);
+  };
+
+  // Drag end handler - reorder habits
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
+
+    setActiveId(null);
 
     if (!over || active.id === over.id) {
       return;
     }
 
-    // TODO: Implement reorder logic
-    console.log('Drag ended:', { active: active.id, over: over.id });
+    const oldIndex = habits.findIndex((h) => h.id === active.id);
+    const newIndex = habits.findIndex((h) => h.id === over.id);
+
+    if (oldIndex !== -1 && newIndex !== -1) {
+      const newOrder = arrayMove(habits, oldIndex, newIndex).map((h) => h.id);
+      reorderHabits(newOrder);
+    }
   };
+
+  // Drag cancel handler
+  const handleDragCancel = () => {
+    setActiveId(null);
+  };
+
+  // Find the active habit for drag overlay
+  const activeHabit = activeId ? habits.find((h) => h.id === activeId) : null;
 
   return (
     <div className="min-h-screen bg-dark">
@@ -46,7 +85,9 @@ export default function Home() {
         {/* Drag and Drop Context */}
         <DndContext
           collisionDetection={closestCenter}
+          onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
+          onDragCancel={handleDragCancel}
         >
           <SortableContext
             items={habits.map((habit) => habit.id)}
@@ -67,22 +108,46 @@ export default function Home() {
               ) : (
                 // Habit Cards List
                 habits.map((habit) => (
-                  <div
+                  <HabitCard
                     key={habit.id}
-                    className="p-6 rounded-xl bg-zinc-800/70 backdrop-blur-[15px] border border-white/10"
-                  >
-                    {/* TODO: Phase 5 - Replace with HabitCard component */}
-                    <h3 className="text-lg font-semibold text-white">
-                      {habit.name || 'Untitled'}
-                    </h3>
-                    <p className="text-sm text-zinc-400 mt-1">
-                      {habit.completedDates.size} days completed
-                    </p>
-                  </div>
+                    habit={habit}
+                    onNameChange={(name) => updateHabit(habit.id, { name })}
+                    onDateToggle={(dateString) => toggleDate(habit.id, dateString)}
+                    onOptionsClick={() => {
+                      // TODO: Phase 9 - Open context menu
+                      console.log('Options clicked for habit:', habit.id);
+                    }}
+                    onNoteClick={() => {
+                      // TODO: Phase 10 - Open note modal
+                      console.log('Note clicked for habit:', habit.id);
+                    }}
+                    onCardClick={() => {
+                      if (selectMode) {
+                        toggleHabitSelection(habit.id);
+                      }
+                    }}
+                    isSelectMode={selectMode}
+                  />
                 ))
               )}
             </div>
           </SortableContext>
+
+          {/* Drag Overlay */}
+          <DragOverlay>
+            {activeHabit ? (
+              <div className="opacity-90 rotate-3 scale-105">
+                <HabitCard
+                  habit={activeHabit}
+                  onNameChange={() => {}}
+                  onDateToggle={() => {}}
+                  onOptionsClick={() => {}}
+                  onNoteClick={() => {}}
+                  isSelectMode={false}
+                />
+              </div>
+            ) : null}
+          </DragOverlay>
         </DndContext>
       </main>
     </div>
