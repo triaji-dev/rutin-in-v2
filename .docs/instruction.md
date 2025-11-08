@@ -360,29 +360,29 @@ Checklist kronologis untuk membangun aplikasi Rutin.in sesuai spesifikasi di `pr
 
 ## Phase 15: Keyboard Shortcuts & Accessibility
 
-- [ ] **15.1** Implement keyboard navigation:
+- [x] **15.1** Implement keyboard navigation:
   - Tab through interactive elements
   - Enter to save edits
   - Escape to close modals
   - Ctrl/Cmd+Enter to save notes
-- [ ] **15.2** Add focus indicators:
+- [x] **15.2** Add focus indicators:
   - Visible outlines on all focusable elements
   - Style: 2px outline dengan offset
   - Use accessible colors
-- [ ] **15.3** Add ARIA labels:
+- [x] **15.3** Add ARIA labels:
   - Icon buttons: aria-label
   - Modal: aria-modal, role="dialog"
   - Context menu: role="menu", role="menuitem"
   - Date circles: aria-label dengan date info
-- [ ] **15.4** Add screen reader text:
+- [x] **15.4** Add screen reader text:
   - Visually hidden text untuk icons
   - Descriptive labels untuk actions
   - Status announcements untuk state changes
-- [ ] **15.5** Verify color contrast:
+- [x] **15.5** Verify color contrast:
   - Check all text colors against backgrounds
   - Ensure WCAG AA compliance
   - Test dengan contrast checker tools
-- [ ] **15.6** Ensure touch targets:
+- [x] **15.6** Ensure touch targets:
   - Minimum 44x44px untuk buttons
   - Adequate spacing between elements
   - Test pada mobile devices
@@ -391,25 +391,25 @@ Checklist kronologis untuk membangun aplikasi Rutin.in sesuai spesifikasi di `pr
 
 ## Phase 16: Styling & Polish
 
-- [ ] **16.1** Apply glassmorphism effects:
+- [x] **16.1** Apply glassmorphism effects:
   - Card backgrounds: rgba(38, 38, 38, 0.7)
   - Backdrop blur: 15px
   - Subtle borders: rgba(255, 255, 255, 0.1)
-- [ ] **16.2** Add transitions & animations:
+- [x] **16.2** Add transitions & animations:
   - 200-300ms ease untuk all interactions
   - Smooth modal animations (fade + slide)
   - Hover effects pada buttons dan cards
   - Scale transform saat dragging
-- [ ] **16.3** Refine color palette:
+- [x] **16.3** Refine color palette:
   - Verify all COLOR_SETS implemented
   - Test each theme color pada cards
   - Ensure visibility on dark background
-- [ ] **16.4** Polish responsive design:
+- [x] **16.4** Polish responsive design:
   - Test pada different screen sizes
   - Adjust layout untuk mobile
   - Ensure cards stack properly
   - Mobile-friendly touch interactions
-- [ ] **16.5** Add loading states:
+- [x] **16.5** Add loading states:
   - Skeleton screens jika needed
   - Loading indicators untuk async actions
   - Disable buttons saat processing
@@ -418,62 +418,62 @@ Checklist kronologis untuk membangun aplikasi Rutin.in sesuai spesifikasi di `pr
 
 ## Phase 17: Testing & Bug Fixes
 
-- [ ] **17.1** Test habit CRUD operations:
-  - [ ] Create new habit
-  - [ ] Edit habit name
-  - [ ] Change habit color (single)
-  - [ ] Delete single habit dengan confirmation
-  - [ ] Drag and drop to reorder
-- [ ] **17.2** Test date tracking:
-  - [ ] Toggle date completion dalam weekly view
-  - [ ] Verify grid view shows correct history
-  - [ ] Check date format consistency
-  - [ ] Verify completedDates Set updates
-- [ ] **17.3** Test select mode:
-  - [ ] Enter select mode via context menu
-  - [ ] Select/unselect individual habits
-  - [ ] Select all habits
-  - [ ] Unselect all habits
-  - [ ] Bulk change color
-  - [ ] Bulk delete dengan confirmation
-  - [ ] Exit select mode
-- [ ] **17.4** Test notes system:
-  - [ ] Add note to habit
-  - [ ] Edit existing note
-  - [ ] View note preview
-  - [ ] Note persists setelah reload
-  - [ ] Note included dalam export
-- [ ] **17.5** Test data management:
-  - [ ] Download habits as JSON
-  - [ ] Upload/import JSON file
-  - [ ] Verify all data restored
-  - [ ] Handle invalid JSON files
-  - [ ] LocalStorage persistence works
-- [ ] **17.6** Test view modes:
-  - [ ] Switch between weekly and grid
-  - [ ] Verify correct days displayed
-  - [ ] View preference persists
-- [ ] **17.7** Test keyboard shortcuts:
-  - [ ] Enter saves habit name
-  - [ ] Escape closes modals
-  - [ ] Ctrl/Cmd+Enter saves notes
-  - [ ] Tab navigation works
-- [ ] **17.8** Test context menu:
-  - [ ] Right-click opens menu
-  - [ ] Three-dot button opens menu
-  - [ ] All menu options work
-  - [ ] Click outside closes menu
-- [ ] **17.9** Test modals:
-  - [ ] Modals animate properly
-  - [ ] Backdrop click closes (jika enabled)
-  - [ ] Escape closes modal
-  - [ ] Focus trap works
-- [ ] **17.10** Test edge cases:
-  - [ ] Empty habit name defaults to "Untitled"
-  - [ ] No habits to download shows alert
-  - [ ] First load creates default habit
-  - [ ] Very long habit names handled
-  - [ ] Many habits (performance)
+- [x] **17.1** Test habit CRUD operations:
+  - [x] Create new habit
+  - [x] Edit habit name
+  - [x] Change habit color (single)
+  - [x] Delete single habit dengan confirmation
+  - [x] Drag and drop to reorder
+- [x] **17.2** Test date tracking:
+  - [x] Toggle date completion dalam weekly view
+  - [x] Verify grid view shows correct history
+  - [x] Check date format consistency
+  - [x] Verify completedDates Set updates
+- [x] **17.3** Test select mode:
+  - [x] Enter select mode via context menu
+  - [x] Select/unselect individual habits
+  - [x] Select all habits
+  - [x] Unselect all habits
+  - [x] Bulk change color
+  - [x] Bulk delete dengan confirmation
+  - [x] Exit select mode
+- [x] **17.4** Test notes system:
+  - [x] Add note to habit
+  - [x] Edit existing note
+  - [x] View note preview
+  - [x] Note persists setelah reload
+  - [x] Note included dalam export
+- [x] **17.5** Test data management:
+  - [x] Download habits as JSON
+  - [x] Upload/import JSON file
+  - [x] Verify all data restored
+  - [x] Handle invalid JSON files
+  - [x] LocalStorage persistence works
+- [x] **17.6** Test view modes:
+  - [x] Switch between weekly and grid
+  - [x] Verify correct days displayed
+  - [x] View preference persists
+- [x] **17.7** Test keyboard shortcuts:
+  - [x] Enter saves habit name
+  - [x] Escape closes modals
+  - [x] Ctrl/Cmd+Enter saves notes
+  - [x] Tab navigation works
+- [x] **17.8** Test context menu:
+  - [x] Right-click opens menu
+  - [x] Three-dot button opens menu
+  - [x] All menu options work
+  - [x] Click outside closes menu
+- [x] **17.9** Test modals:
+  - [x] Modals animate properly
+  - [x] Backdrop click closes (jika enabled)
+  - [x] Escape closes modal
+  - [x] Focus trap works
+- [x] **17.10** Test edge cases:
+  - [x] Empty habit name defaults to "Untitled"
+  - [x] No habits to download shows alert
+  - [x] First load creates default habit
+  - [x] Very long habit names handled
+  - [x] Many habits (performance)
 
 ---
 
