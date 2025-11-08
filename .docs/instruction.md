@@ -58,27 +58,27 @@ Checklist kronologis untuk membangun aplikasi Rutin.in sesuai spesifikasi di `pr
 
 ## Phase 3: UI Components Library
 
-- [ ] **3.1** Create `components/ui/Button.tsx`:
+- [x] **3.1** Create `components/ui/Button.tsx`:
   - Implement variants: primary, secondary, danger, ghost, icon
   - Add proper TypeScript props interface
   - Style dengan Tailwind CSS
-- [ ] **3.2** Create `components/ui/Modal.tsx`:
+- [x] **3.2** Create `components/ui/Modal.tsx`:
   - Implement backdrop overlay
   - Implement content container
   - Handle backdrop click to close
   - Handle Escape key to close
   - Add animations (fade in, slide up)
-- [ ] **3.3** Create `components/ui/Toggle.tsx`:
+- [x] **3.3** Create `components/ui/Toggle.tsx`:
   - Implement animated switch component
   - Handle active/inactive states
   - Add transition animations
-- [ ] **3.4** Create `components/ui/ContextMenu.tsx`:
+- [x] **3.4** Create `components/ui/ContextMenu.tsx`:
   - Implement right-click menu
   - Position near cursor/button
   - Handle menu items with callbacks
   - Auto-close on selection
   - Click outside to dismiss
-- [ ] **3.5** Create `components/ui/ColorPicker.tsx`:
+- [x] **3.5** Create `components/ui/ColorPicker.tsx`:
   - Display 10 color swatches dalam grid
   - Handle color selection
   - Visual feedback on hover
