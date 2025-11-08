@@ -164,13 +164,13 @@ Checklist kronologis untuk membangun aplikasi Rutin.in sesuai spesifikasi di `pr
 
 ## Phase 7: Modal Components
 
-- [ ] **7.1** Create `components/ConfirmModal.tsx`:
+- [x] **7.1** Create `components/ConfirmModal.tsx`:
   - Display confirmation message
   - Show different messages untuk single/bulk delete
   - Add confirm/cancel buttons
   - Handle keyboard shortcuts (Enter, Escape)
   - Style dengan dark theme
-- [ ] **7.2** Create `components/NoteModal.tsx`:
+- [x] **7.2** Create `components/NoteModal.tsx`:
   - Display title: "Add Note" atau "Edit Note"
   - Add textarea untuk note content
   - Add save/cancel buttons
@@ -178,7 +178,7 @@ Checklist kronologis untuk membangun aplikasi Rutin.in sesuai spesifikasi di `pr
   - Handle Escape to cancel
   - Auto-focus textarea on open
   - Integrate dengan Zustand store
-- [ ] **7.3** Integrate ColorPicker Modal:
+- [x] **7.3** Integrate ColorPicker Modal:
   - Show modal saat change color action
   - Handle single habit color change
   - Handle bulk color change
