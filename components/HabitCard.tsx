@@ -195,7 +195,7 @@ export const HabitCard: React.FC<HabitCardProps> = ({
         className={cn(
         'group relative',
         'p-3 sm:p-4',
-        'rounded-lg',
+        'rounded-2xl',
         // Glassmorphism effect
         'bg-zinc-800/90 backdrop-blur-[15px]',
         'border',
@@ -254,12 +254,12 @@ export const HabitCard: React.FC<HabitCardProps> = ({
         />
 
         {/* Dates Section */}
-        <div className="mt-3">
+        <div className="mt-3 flex flex-col items-center">
           {viewMode === 'weekly' ? (
             // Weekly View: DateCircles with day labels on top
             <div className="flex flex-col">
               {/* Day Labels Row */}
-              <div className="flex items-center gap-1.5 mb-1.5">
+              <div className="flex items-center gap-3 mb-1.5 justify-center">
                 {weekDays.map((date) => {
                   const dayName = getDayName(date);
                   return (
@@ -275,7 +275,7 @@ export const HabitCard: React.FC<HabitCardProps> = ({
                 })}
               </div>
               {/* Date Circles Row */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-3 justify-center">
                 {weekDays.map((date) => {
                   const dateString = formatDate(date);
                   const isCompleted = habit.completedDates.has(dateString);

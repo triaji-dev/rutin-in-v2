@@ -46,7 +46,7 @@ export const DateGrid: React.FC<DateGridProps> = ({
   return (
     <div
       className={cn(
-        'grid grid-cols-7 gap-0.5',
+        'grid grid-rows-7 grid-flow-col gap-0.5',
         className
       )}
       role="img"
@@ -63,7 +63,7 @@ export const DateGrid: React.FC<DateGridProps> = ({
               'w-2.5 h-2.5',
               'rounded-sm',
               'transition-colors duration-150',
-              isCompleted ? '' : 'bg-zinc-800/60'
+              isCompleted ? '' : 'bg-zinc-600/60'
             )}
             style={
               isCompleted

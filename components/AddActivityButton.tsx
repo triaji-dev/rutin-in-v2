@@ -41,12 +41,15 @@ export const AddActivityButton: React.FC<AddActivityButtonProps> = ({
         'fixed bottom-6 left-1/2 -translate-x-1/2',
         'z-20',
         // Shadow for depth
-        'shadow-2xl shadow-black/30',
+        'shadow-3xl shadow-black/30',
         // Extra padding for icon
-        'px-6 py-3',
+        'px-40 py-3',
         // Hover lift effect
-        'hover:scale-105 active:scale-95',
-        'transition-transform duration-200',
+        'active:scale-95',
+        'transition-all duration-200',
+        'cursor-pointer',
+        'backdrop-blur-xs',
+        '!bg-black/30 hover:!bg-black/40',
         className
       )}
     >

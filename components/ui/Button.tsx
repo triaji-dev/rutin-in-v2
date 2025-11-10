@@ -58,13 +58,13 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       'transition-all duration-200 ease-in-out',
       'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
       'disabled:opacity-50 disabled:cursor-not-allowed',
-      'select-none'
+      'select-none cursor-pointer'
     );
 
     // Variant styles
     const variantStyles = {
       primary: cn(
-        'bg-zinc-700 text-zinc-200',
+        'bg-zinc-600 text-zinc-200',
         'hover:bg-zinc-600 active:bg-zinc-800',
         'focus-visible:ring-zinc-500',
         'shadow-sm'

@@ -68,6 +68,7 @@ export default function Home() {
     };
     
     addHabit(newHabit);
+    scrollToBottom();
     
     // Auto-focus on the new habit name for editing
     // Wait for next tick to ensure DOM is updated
@@ -161,7 +162,7 @@ export default function Home() {
       <Header />
 
       {/* Main Content */}
-      <main className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+      <main className="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
         {/* Drag and Drop Context - disabled in select mode */}
         <DndContext
           collisionDetection={closestCenter}
@@ -218,7 +219,7 @@ export default function Home() {
           {/* Drag Overlay */}
           <DragOverlay>
             {activeHabit ? (
-              <div className="opacity-90 rotate-3 scale-105">
+              <div className="opacity-90 scale-105">
                 <HabitCard
                   habit={activeHabit}
                   onNameChange={() => {}}
@@ -265,3 +266,12 @@ export default function Home() {
     </div>
   );
 }
+function scrollToBottom() {
+  setTimeout(() => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth'
+    });
+  }, 100);
+}
+
